@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- <html lang="en"> -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styleO.css">
+    <title>Load Balancer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body background="./img/tic-tac-toe.png" class="select-none">
+    <div class=" m-4 p-4 flex justify-between items-center">
+        <!-- left side -->
+        <div class="flex items-center">
+            <img src="./img/LoadBalancer.png" width="100" alt="Logo" class="mr-2 ml-40">
+            <a href="#" class="inline-block p-2 text-black mr-2 text-xl tracking-widest font-bold font-poppins">Load Balancer</a>
+        </div>
+        <!-- right side -->
+        <div class="hidden:md:block">
+            <a href="#" class="inline-block p-2 text-black text-xl font-poppins mr-2">Inicio</a>
+            <a href="#" class="inline-block p-2 text-black text-xl font-poppins mr-40">Acerca de</a>
+        </div>
+    </div>
+
+    <div class="space-y-4 flex flex-col items-center select-none">
+        <h1 class="text-black text-6xl font-bold font-poppins">BIENVENIDO AL BALANCEADOR DE CARGA</h1>
+        <h3 class="p-2 text-gray-500 text-4xl font-poppins">Selecciona una imagen para iniciar con el proceso</h3>
+    </div>
+
+    <div id="app">
+        <div v-for="item in items">
+            <div v-if="!item.image" class="flex items-center justify-center bg-grey-lighter select-none">
+                <label
+                    class="inline-flex items-center bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 
+                    focus:ring-opacity-40 text-white text-xl font-bold rounded-full py-4 px-14 font-poppins focus:outline-none cursor-pointer">
+                    <svg class="w-7 h-7 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>Seleccionar Imagen</span>
+                    <input type="file" @change="onFileChange(item, $event)" class="hidden">
+                    <!-- <input type="file" @change="onSelect" class="hidden"> -->
+                </label>
+            </div>
+            <div v-else class="flex m-5 select-none">
+                <div id="preview"
+                    class="flex-1 bg-white border-2 p-6 rounded-md tracking-wide text-center shadow-2xl mx-3">
+                    <img class="mb-4" :src="item.image" />
+                    <label
+                        class="inline-flex items-center bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 
+                        focus:ring-opacity-40 text-white text-xl font-bold rounded-full py-4 px-4 font-poppins focus:outline-none cursor-pointer">
+                        <svg class="w-7 h-7 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span>Eliminar imagen</span>
+                        <button @click="removeImage(item)"></button>
+                    </label>
+
+                </div>
+                <div id="submit" class="flex items-center justify-center bg-grey-lighter">
+                    <label
+                        class="inline-flex items-center bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 
+                        focus:ring-opacity-40 text-white text-xl font-bold rounded-full py-4 px-4 font-poppins focus:outline-none cursor-pointer">
+                        <svg class="w-7 h-7 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span>Escribir</span>
+                        <button v-on:click="pruebaBoton()"></button>
+                    </label>
+                </div>
+                <div id="written"
+                    class="flex-1 bg-white border-2 p-6 rounded-md tracking-wide text-center shadow-2xl mx-3">
+                    <h1 class="font-poppins font-bold">Imagen Escrita</h1>
+                </div>
+                <div class="flex-1 bg-white border-2 p-6 rounded-md tracking-wide text-center shadow-2xl mx-3">
+                    <h1 class="font-poppins font-bold">Log</h1>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
